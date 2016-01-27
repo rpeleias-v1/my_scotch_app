@@ -17,9 +17,9 @@ module.exports = function(app) {
 		var newUser = new User(req.body);
 
 		newUser.save(function(err) {
-			if(err) {
+			if (err) {
 				res.send(err);
-			} 
+			}
 			res.json(req.body);
 		});
 	});
