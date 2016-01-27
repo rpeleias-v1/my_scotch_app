@@ -1,0 +1,21 @@
+{
+  "name": "my_scotch_app",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Rodrigo Peleias"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "holderjs": "^2.9.1"
+  }
+}

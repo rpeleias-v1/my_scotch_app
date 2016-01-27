@@ -1,0 +1,102 @@
+<DOCTYPE html>
+<html class="no-js" np-app="meanManApp">
+<head>
+	<meta charset="utf-8">
+	<title>My Scotch MEAN App</title>
+
+	<link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap-theme.css">
+	<link rel="stylesheet" href="style.css"/>
+
+	<script src="vendor/holderjs/holder.js"></script>	
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwDsB78wdkRp7zWyMRHSrpB8dJjxVZD08"></script>    
+    <script src="vendor/modernizr/bin/modernizr"></script>    
+    <script src="vendor/jquery/jquery.js"></script>
+    <script src="vendor/angular/angular.js"></script>
+    <script src="vendor/angular-route/angular-route.js"></script>
+    <script src="vendor/angularjs-geolocation/dist/angularjs-geolocation.min.js"></script>
+
+</head>
+<body>
+
+	<div class="container">
+		<div class="header">
+			<ul class="nav nav-pills pull-right">
+				<li active><a href="">Join the Team</a></li>
+				<li disabled><a href="">Find Teammates</a></li>
+			</ul>
+			<h3 class="text-muted">The Scotch Mean MapApp</h3>
+		</div>
+
+		<div class="row-content">
+			<div class="col-md-7">
+				<div id="map">
+					<img src="holder.js/645x645">
+				</div>
+			</div>
+
+			<!-- side Panel-->
+			<div class="col-md-5">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h2 class="panel-title text-center">Join the Scotch Team! <span class="glyphicon gluphicon-map-marker"></span></h2>
+					</div>
+				</div>
+
+				<div class="panel-body">
+					<!-- -novalidate disable form validation, in order to delegate it to Angular.js -->
+					<form name="addForm" novalidate>
+						<div class="form-group">
+							<label for="username">Username <span class="bagde">All fiels required</span></label>
+							<input type="text" class="form-control" id="username" placeholder="OldanGold" ng-model="formData.username" required> 
+						</div>
+						<label class="radio cotrol-label">Gender</label>
+						<div class="radio" required>
+							<label>
+								<input type="radio" name="optionsRadio" id="radiomale" value="Male" ng-model="formData.gender">
+								Male
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" name="optionsRadio" id="radiofemale" value="Female" ng-model="formData.gender">
+								Female
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" name="optionsRadio" id="radioother" value="What's it to ya?" ng-model="formData.gender">
+								What's it to ya?
+							</label>
+						</div>
+						<div class="form-group">
+							<label for="ageusername">Age</label>
+							<input type="text" class="form-control" id="age" placeholder="72" ng-model="formData.age" required> 
+						</div>
+						<div class="form-group">
+							<label for="language">Favorite Language</label>
+							<input type="text" class="form-control" id="language" placeholder="Clojure" ng-model="formData.favlang" required> 
+						</div>
+						<div class="form-group">
+							<label for="latitude">Latitude</label>
+							<input type="text" class="form-control" id="latitude" placeholder="39.500" ng-model="formData.latitude" readonly> 
+						</div>
+						<div class="form-group">
+							<label for="longitude">Longitude</label>
+							<input type="text" class="form-control" id="longitude" placeholder="98.500" ng-model="formData.longitude" readonly> 
+						</div>
+						<div class="form-group">
+							<label for="username">HTML5 Verified Location? <span><button class="btn btn-default btn-xs"><span class="glyphicon-refresh"></span></button></span></label>
+							<input type="text" class="form-control" id="verifiec" placeholder="No, thanks!" ng-model="formData.htmlverified" readonly> 
+						</div>
+
+						<button type="sybmit" class="btn btn-danger btn-block" ng-disabled="addForm.$invalid">Submit</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div>	
+
+</body>
+</html>
