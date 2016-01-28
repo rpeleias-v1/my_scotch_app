@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 
-var UserSchema = new Schema({
+var UserSchema = mongoose.Schema({
 	username: {
 		type: String,
 		required: true
@@ -40,4 +39,4 @@ UserSchema.pre('save', function(next) {
 //index Schema in 2dsphere format
 UserSchema.index({location: '2dsphere'});
 
-module.exports = mongoose.model('scotch-user', UserSchema);
+module.exports = mongoose.model('scotchUser', UserSchema);

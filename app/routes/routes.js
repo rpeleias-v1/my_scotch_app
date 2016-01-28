@@ -13,8 +13,9 @@ module.exports = function(app) {
 		});
 	});
 
-	app.post('/users', function(req, res) {
+	app.post('/users', function(req, res) {		
 		var newUser = new User(req.body);
+		console.log(newUser);
 
 		newUser.save(function(err) {
 			if (err) {

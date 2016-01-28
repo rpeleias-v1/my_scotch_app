@@ -1,5 +1,5 @@
 <DOCTYPE html>
-<html class="no-js" np-app="meanManApp">
+<html class="no-js" ng-app="meanMapApp">
 <head>
 	<meta charset="utf-8">
 	<title>My Scotch MEAN App</title>
@@ -15,9 +15,11 @@
     <script src="vendor/angular/angular.js"></script>
     <script src="vendor/angular-route/angular-route.js"></script>
     <script src="vendor/angularjs-geolocation/dist/angularjs-geolocation.min.js"></script>
-
+    <script src="js/app.js"></script>
+    <script src="js/addCtrl.js"></script>
+    <script src="js/gservice.js"></script>
 </head>
-<body>
+<body ng-controller="addCtrl">
 
 	<div class="container">
 		<div class="header">
@@ -30,8 +32,8 @@
 
 		<div class="row-content">
 			<div class="col-md-7">
-				<div id="map">
-					<img src="holder.js/645x645">
+				<div id="map" style="width:645px; height: 645px">
+					<!-- <img src="holder.js/645x645"> -->					
 				</div>
 			</div>
 
@@ -90,7 +92,7 @@
 							<input type="text" class="form-control" id="verifiec" placeholder="No, thanks!" ng-model="formData.htmlverified" readonly> 
 						</div>
 
-						<button type="sybmit" class="btn btn-danger btn-block" ng-disabled="addForm.$invalid">Submit</button>
+						<button type="sybmit" class="btn btn-danger btn-block" ng-click="createUser()" ng-disabled="addForm.$invalid">Submit</button>
 					</form>
 				</div>
 			</div>

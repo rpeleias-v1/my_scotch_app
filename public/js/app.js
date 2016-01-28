@@ -1,0 +1,1 @@
+angular.module('meanMapApp', ['addCtrl', 'geolocation', 'gservice']);
