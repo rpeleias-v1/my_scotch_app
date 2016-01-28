@@ -1,7 +1,11 @@
 angular.module('gservice', [])
-	.factory('gservice', function($http) {
+	.factory('gservice', function($rootScope, $http) {
 
 		var googleMapsService = {};
+		//variables to add clickablity on screen map
+		googleMapsService.clickLat = 0;
+		googleMapsService.clickLong = 0;
+
 		var locations = [];
 		var selectedLat = -23.5503787;
 		var selectedLong = -46.6361425;
@@ -32,12 +36,12 @@ angular.module('gservice', [])
 				var contentString = 
 					'<p><b>Username</b>: ' + user.username +
 					'<br><b>Age</b>: ' + user.age +
-					'<pbr<b>Gender</b>: ' + user.gender +
+					'<br><b>Gender</b>: ' + user.gender +
 					'<br><b>Favorite Language</b>: ' + user.favlang +
 					'</p>';
 
 				locations.push({
-					latlon: new google.maps.LatLng(user.location[1], user.location[2]),
+					latlon: new google.maps.LatLng(user.location[1], user.location[0]),
 					message: new google.maps.InfoWindow({
 						content: contentString,
 						maxWidth: 320
@@ -83,11 +87,34 @@ angular.module('gservice', [])
 				map: map,
 				icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
 			});
-			lastMarker: marker
+			lastMarker = marker;
+
+			//function for moving to a selected location
+			map.panTo(new google.maps.LatLng(latitude, longitude));
+
+			google.maps.event.addListener(map, 'click', function(e) {
+				var marker = new google.maps.Marker({
+					position: e.latLng,
+					animation: google.maps.Animation.BOUNCE,
+					map: map,
+					icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+				});
+
+				if (lastMarker) {
+					lastMarker.setMap(null);
+				}
+
+				lastMarker = marker;
+				map.panTo(marker.position);
+
+				googleMapsService.clickLat = marker.getPosition().lat();
+				googleMapsService.clickLong = marker.getPosition().lng();
+				$rootScope.$broadcast('clicked');
+			});
 		};
 
 		google.maps.event.addDomListener(window, 'load', 
 			googleMapsService.refresh(selectedLat, selectedLong));
-
+		
 		return googleMapsService;
 	});
