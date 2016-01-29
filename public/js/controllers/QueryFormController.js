@@ -1,6 +1,5 @@
 angular.module('meanMapApp').controller('QueryFormController', function($scope, $log, UserSearch, $rootScope, geolocation, gservice) {
     $scope.formData = {};
-    var queryBody = {};
 
     geolocation.getLocation().then(function(data) {
         coords = {lat:data.coords.latitude, long:data.coords.longitude};
@@ -16,23 +15,9 @@ angular.module('meanMapApp').controller('QueryFormController', function($scope, 
     });
 
     $scope.queryUsers = function() {
-
-        queryBody = {
-            longitude: parseFloat($scope.formData.longitude),
-            latitude: parseFloat($scope.formData.latitude),
-            distance: parseFloat($scope.formData.distance),
-            male: $scope.formData.male,
-            female: $scope.formData.female,
-            other: $scope.formData.other,
-            minAge: $scope.formData.minAge,
-            maxAge: $scope.formData.maxAge,
-            favlang: $scope.formData.favlang,
-            reqVerified: $scope.formData.reqVerified
-        };
-
-        UserSearch.query({params: queryBody}, function(queryResults) {
-                gservice.refresh(queryBody.latitude, queryBody.longitude, queryResults);
-
+        UserSearch.query({params: $scope.formData}, 
+            function(queryResults) {
+                gservice.refresh($scope.formData.latitude, $scope.formData.longitude, queryResults);
                 $scope.queryCount = queryResults.length;
             }
             ,function(err) {
