@@ -10,19 +10,24 @@ angular.module('gservice', [])
 		var selectedLat = -23.5503787;
 		var selectedLong = -46.6361425;
 
-		googleMapsService.refresh = function(latitude, longitude) {
+		googleMapsService.refresh = function(latitude, longitude, filteredResults) {
 			locations = [];
 			selectedLat = latitude;
 			selectedLong = longitude;
 
-			$http.get('/users')
-			.success(function(response) {
-				locations = convertToMapPoints(response);
-				initialize(latitude, longitude);
-			})
-			.error(function(err){
-				console.log(err);
-			});
+			if (filteredResults) {
+				locations = convertToMapPoints(filteredResults);
+				initialize(latitude, longitude, true);
+			} else {
+				$http.get('/users')
+				.success(function(response) {
+					locations = convertToMapPoints(response);
+					initialize(latitude, longitude, false);
+				})
+				.error(function(err){
+					console.log(err);
+				});
+			}			
 		};
 
 		//convert a JSON of users into map points
@@ -56,7 +61,7 @@ angular.module('gservice', [])
 		};
 
 		//initialize the map
-		var initialize = function(latitude, longitude) {
+		var initialize = function(latitude, longitude, filter) {
 			var myLatLng = {lat: selectedLat, lng: selectedLong};
 
 			if (!map) {
@@ -66,12 +71,19 @@ angular.module('gservice', [])
 				});
 			}
 
+			if(filter){
+		        icon = "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
+		    }
+		    else{
+		        icon = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png";
+		    }
+
 			locations.forEach(function(n, i) {
 				var marker = new google.maps.Marker({
 					position: n.latlon,
 					map: map,
 					title: 'Big Map',
-					icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+					icon: icon,
 				});
 
 				google.maps.event.addListener(marker, 'click', function(e) {
@@ -81,7 +93,7 @@ angular.module('gservice', [])
 			});
 
 			var initialLocation = new google.maps.LatLng(latitude, longitude);
-			var marker=  new google.maps.Marker({
+			var marker =  new google.maps.Marker({
 				position: initialLocation,
 				animation: google.maps.Animation.BOUNCE,
 				map: map,
