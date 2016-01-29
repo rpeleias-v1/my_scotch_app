@@ -12,8 +12,8 @@ module.exports = function(app) {
 			function(err) {
 				res.send(err);
 			}
-		);
-	});
+		)
+	};
 
 	controller.registerUser = function(req, res) {	
 		User.create(req.body)	
@@ -25,8 +25,8 @@ module.exports = function(app) {
 				console.log(err);
 				res.send(err);
 			}
-		);		
-	});
+		)		
+	};
 
 	controller.findUsers = function(req, res) {
 		var lat = req.body.latitude;
@@ -74,8 +74,8 @@ module.exports = function(app) {
 			function(err) {
 				res.send(err);
 			}
-		);
-	});
+		)
+	};
 
 	return controller;
 
