@@ -29,17 +29,18 @@ module.exports = function(app) {
 	};
 
 	controller.findUsers = function(req, res) {
-		var lat = req.body.latitude;
-		var long = req.body.longitude;
-		var distance = req.body.distance;
-		var male = req.body.male;
-		var female = req.body.female;
-		var other = req.body.other;
-		var minAge = req.body.minAge;
-		var maxAge = req.body.maxAge;
-		var favLang = req.body.favlang;
-		var reqVerified = req.body.reqVerified;
-
+		var queryParams = JSON.parse(req.query.params);		
+		var lat = queryParams.latitude;
+		var long = queryParams.longitude;
+		var distance = queryParams.distance;
+		var male = queryParams.male;
+		var female = queryParams.female;
+		var other = queryParams.other;
+		var minAge = queryParams.minAge;
+		var maxAge = queryParams.maxAge;
+		var favLang = queryParams.favlang;
+		var reqVerified = queryParams.reqVerified;
+		
 		var query = User.find({});
 
 		if (distance) {
@@ -69,7 +70,7 @@ module.exports = function(app) {
 		query.exec()
 		.then(
 			function(users) {			
-				res.json(users);
+				res.send(users);
 			}, 
 			function(err) {
 				res.send(err);

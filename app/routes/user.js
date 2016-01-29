@@ -6,5 +6,5 @@ module.exports = function(app) {
 
 	app.route('/users').post(controller.registerUser);
 
-	app.route('/query').post(controller.findUsers);		
+	app.route('/query').get(controller.findUsers);		
 }

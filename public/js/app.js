@@ -1,13 +1,13 @@
-angular.module('meanMapApp', ['addCtrl' ,'queryCtrl', 'geolocation', 'gservice', 'ngRoute'])
+angular.module('meanMapApp', ['ngResource', 'geolocation', 'gservice', 'ngRoute'])
 	.config(function($routeProvider) {
 
 		$routeProvider.when('/join', {
-			controller: 'addCtrl',
+			controller: 'AddFormController',
 			templateUrl: 'partials/addForm.html'
 		});
 
 		$routeProvider.when('/find', {
-			controller: 'queryCtrl',
+			controller: 'QueryFormController',
 			templateUrl: 'partials/queryForm.html'
 		});
 
