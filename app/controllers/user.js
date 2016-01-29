@@ -1,31 +1,34 @@
-var mongoose = require('mongoose');
-var User = require('../models/model.js');
-
 module.exports = function(app) {
 
-	app.get('/users', function(req, res) {
-		var query = User.find({});
-		query.exec(function(err, users) {
-			if (err) {
+	var controller = {};
+	var User = app.models.user;
+
+	controller.getUsers = function(req, res) {
+		User.find().exec()
+		.then(
+			function(users) {
+				res.json(users);
+			}, 
+			function(err) {
 				res.send(err);
 			}
-			res.json(users);
-		});
+		);
 	});
 
-	app.post('/users', function(req, res) {		
-		var newUser = new User(req.body);
-		console.log(newUser);
-
-		newUser.save(function(err) {
-			if (err) {
+	controller.registerUser = function(req, res) {	
+		User.create(req.body)	
+		.then(
+			function(user) {
+				res.status(201).json(user);
+			},
+			function(err) {
+				console.log(err);
 				res.send(err);
 			}
-			res.json(req.body);
-		});
+		);		
 	});
 
-	app.post('/query/', function(req, res) {
+	controller.findUsers = function(req, res) {
 		var lat = req.body.latitude;
 		var long = req.body.longitude;
 		var distance = req.body.distance;
@@ -63,11 +66,17 @@ module.exports = function(app) {
 			query = query.where('htmlverifiedage').equals('No, thanks!');
 		}
 
-		query.exec(function(err, users) {
-			if (err) {
+		query.exec()
+		.then(
+			function(users) {			
+				res.json(users);
+			}, 
+			function(err) {
 				res.send(err);
 			}
-			res.json(users);
-		})
-	})
+		);
+	});
+
+	return controller;
+
 }
